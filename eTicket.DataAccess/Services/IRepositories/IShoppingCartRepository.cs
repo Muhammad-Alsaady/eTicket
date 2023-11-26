@@ -11,11 +11,11 @@ namespace eTicket.DataAccess.Services.IRepositories
     public interface IShoppingCartRepository
     {
         public string ShoppingCartId { get; set; }
-        //public List<ShoppingCartItem> ShoppingCartItems { get; set; }
-        //ShoppingCart GetShoppingCart(IServiceProvider service);
+        List<ShoppingCartItem> ShoppingCartItems { get; set; }
         IEnumerable<ShoppingCartItem> GetShoppingCartItems();
         void AddItemtoCart(Movie movie);
         void RemoveItemFromCart(Movie movie);
         double ShoppingCartTotal();
+        Task ClearShoppingCartAsync();
     }
 }

@@ -17,18 +17,21 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString: ConnectionString));
 
 
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddLogging(builder => builder.AddConsole());
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-builder.Services.AddSingleton(sc => ShoppingCart.GetShoppingCart(sc));
+//builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<ShoppingCart>();
+//builder.Services.AddScoped<IApplicationBuilder, ApplicationBuilder>();  
+//builder.Services.AddSingleton(sc => ShoppingCart.GetShoppingCart(sc));
 
 builder.Services.AddDistributedMemoryCache();
 
-services.AddSession(options =>
+builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
@@ -63,6 +66,8 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
+
+app.UseMiddleware<CartMiddleware>();
 
 app.MapControllerRoute(
     name: "default",

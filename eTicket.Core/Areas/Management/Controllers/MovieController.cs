@@ -1,6 +1,8 @@
 ﻿using eTicket.DataAccess.Services.IRepositories;
 using eTicket.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
 //using System.Web.Mvc;
 using System.Web.WebPages.Html;
 
@@ -17,6 +19,8 @@ namespace eTicket.Core.Areas.Management.Controllers
         }
         public IActionResult Index()
         {
+            var a = HttpContext.Session.GetString("CartId");
+            ViewBag.CartId = a;
             var movies = unitOfWork.Movie.GetAll(IncludeProperties: ("Cinema"));
             return View(movies);
         }

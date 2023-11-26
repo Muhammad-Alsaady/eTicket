@@ -1,4 +1,5 @@
 ﻿using eTicket.DataAccess.Services.IRepositories;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,6 @@ namespace eTicket.DataAccess.Services.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext context;
-
         public UnitOfWork(ApplicationDbContext context)
         {
             this.context = context;
@@ -19,6 +19,7 @@ namespace eTicket.DataAccess.Services.Repositories
             Cinema = new CinemaRepository(context);
             Producer = new ProducerRepository(context);
             ShoppingCart = new ShoppingCart(context);
+            Order = new OrderRepository(context);
         }
 
         public IActorRepository Actor { get; private set; }
@@ -28,7 +29,9 @@ namespace eTicket.DataAccess.Services.Repositories
         public ICinemaRepository Cinema { get; private set; }
 
         public IProducerRepository Producer { get; private set; }
-        public IShoppingCartRepository ShoppingCart { get; set; }
+        public IShoppingCartRepository ShoppingCart { get; private set; }
+
+        public IOrderRepository Order { get; private set; }
 
         public void Dispose()
         {

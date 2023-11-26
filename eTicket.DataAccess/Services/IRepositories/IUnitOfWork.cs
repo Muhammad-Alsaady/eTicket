@@ -13,6 +13,7 @@ namespace eTicket.DataAccess.Services.IRepositories
         ICinemaRepository Cinema { get; }
         IProducerRepository Producer { get; }
         IShoppingCartRepository ShoppingCart { get; }
+        IOrderRepository Order { get; }
         void Save();
         Task SaveAsync();
     }

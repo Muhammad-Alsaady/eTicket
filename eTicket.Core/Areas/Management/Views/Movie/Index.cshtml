@@ -1,8 +1,9 @@
 ﻿@model IEnumerable<Movie>
 @{
     ViewData["Title"] = "Movies";
+    var CartId = ViewBag.CartId;
 }
-
+@inject IHttpContextAccessor httpContext
 <div class="row">
     @foreach(var item in Model)
     {
@@ -72,3 +73,6 @@
 </div>
 
 @await Html.PartialAsync("_CreateButton", "Movie")
+
+<h1>Cart ID: @httpContext.HttpContext.Session.GetString("CartId")</h1>
+<h1>Cart ID: @CartId</h1>
